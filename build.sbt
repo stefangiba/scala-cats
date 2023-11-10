@@ -7,6 +7,7 @@ lazy val cats = project
     name         := "scala-cats",
     version      := "0.1.0-SNAPSHOT",
     scalaVersion := scala3Version,
+    scalacOptions ++= Seq("-Wunused:all"),
     libraryDependencies ++= Seq(
       "org.typelevel" %% "cats-core" % catsVersion
     ),
