@@ -1,9 +1,6 @@
 package com.stefangiba.part1recap
 
-import com.stefangiba.part1recap.Essentials.Animal
-
 object TypeClassVariance {
-  import cats.Eq
   import cats.instances.int.*    // Eq[Int] TC instance
   import cats.instances.option.* // construct a Eq[Option[Int]] TC instance
   import cats.syntax.eq.*
