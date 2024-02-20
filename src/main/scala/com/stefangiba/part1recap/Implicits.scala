@@ -44,20 +44,27 @@ object Implicits {
   // implicit argument is used to PROVE THE EXISTENCE of a type
 
   // implicit methods
-  implicit def oneArgCaseClassSerializer[T <: Product]: JSONSerializer[T] =
-    new JSONSerializer[T] {
-      override def toJson(value: T): String =
-        s"""{ "${value.productElementName(0)}": "${value.productElement(
-            0
-          )}" }""".stripMargin
-    }
+  // implicit def oneArgCaseClassSerializer[T <: Product]: JSONSerializer[T] =
+  //   new JSONSerializer[T] {
+  //     override def toJson(value: T): String =
+  //       s"""{ "${value.productElementName(0)}": "${value.productElement(
+  //           0
+  //         )}" }""".stripMargin
+  //   }
+
+  given caseClassSerializer[T <: Product]: JSONSerializer[T] with {
+    override def toJson(value: T): String =
+      s"""{ "${value.productElementName(0)}": "${value.productElement(
+          0
+        )}" }""".stripMargin
+  }
 
   case class Cat(catName: String)
   val catsToJson = listToJson(List(Cat("Tom"), Cat("Garfield")))
   // implicit methods are used to PROVE THE EXISTENCE of a type
 
   def main(args: Array[String]): Unit = {
-    println(oneArgCaseClassSerializer[Cat].toJson(Cat("Garfield")))
-    println(oneArgCaseClassSerializer[Person].toJson(Person("David")))
+    println(summon[JSONSerializer[Cat]].toJson(Cat("Garfield")))
+    println(summon[JSONSerializer[Person]].toJson(Person("David")))
   }
 }
